@@ -9,7 +9,7 @@
     "test": "jest tests --coverage",
     "lint": "eslint src tests",
     "clean": "rimraf ./dist",
-    "postinstall": "husky install"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
