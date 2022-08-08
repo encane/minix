@@ -1,6 +1,6 @@
 {
   "name": "@encane/minix",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A state management library for mini programs",
   "main": "dist/index.js",
   "scripts": {
