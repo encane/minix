@@ -1,6 +1,6 @@
 {
   "name": "@encane/minix",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A state management library for mini programs",
   "main": "dist/index.js",
   "scripts": {
@@ -33,7 +33,7 @@
     }
   },
   "publishConfig": {
-   "@encane:registry": "https://npm.pkg.github.com"
+    "@encane:registry": "https://npm.pkg.github.com"
   },
   "homepage": "https://github.com/encane/minix#readme",
   "devDependencies": {
