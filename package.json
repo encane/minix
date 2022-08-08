@@ -1,0 +1,54 @@
+{
+  "name": "@encane/minix",
+  "version": "1.0.0",
+  "description": "A state management library for mini programs",
+  "main": "dist/index.js",
+  "scripts": {
+    "build:ts": "tsc --build",
+    "build": "npm run clean && npm run build:ts",
+    "test": "jest tests --coverage",
+    "lint": "eslint src tests",
+    "clean": "rimraf ./dist",
+    "postinstall": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/encane/minix.git"
+  },
+  "keywords": [
+    "mini program",
+    "state management"
+  ],
+  "author": "Jarred Channer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/encane/minix/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
+  },
+  "publishConfig": {
+   "@encane:registry": "https://npm.pkg.github.com"
+  },
+  "homepage": "https://github.com/encane/minix#readme",
+  "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "@babel/preset-typescript": "^7.18.6",
+    "@types/jest": "^28.1.6",
+    "@typescript-eslint/eslint-plugin": "^5.32.0",
+    "@typescript-eslint/parser": "^5.32.0",
+    "babel-jest": "^28.1.3",
+    "eslint": "^8.21.0",
+    "eslint-plugin-jest": "^26.7.0",
+    "husky": "^8.0.1",
+    "jest": "^28.1.3",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.7.4"
+  }
+}
