@@ -32,9 +32,6 @@
       "^.+\\.[t|j]sx?$": "babel-jest"
     }
   },
-  "publishConfig": {
-   "@encane:registry": "https://npm.pkg.github.com"
-  },
   "homepage": "https://github.com/encane/minix#readme",
   "devDependencies": {
     "@babel/core": "^7.18.10",
