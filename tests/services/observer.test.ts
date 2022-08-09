@@ -4,7 +4,7 @@ const arrayPushSpy = jest.spyOn(Array.prototype, 'push');
 const arraySpliceSpy = jest.spyOn(Array.prototype, 'splice');
 
 
-describe('tests the observer service', () => {
+describe('tests the observer.ts service', () => {
   beforeEach(() => {
     arrayPushSpy.mockClear();
     arraySpliceSpy.mockClear();
