@@ -49,4 +49,4 @@ Page({
 
 You can define any amount of stores in your mini program but you should seperate them into in individual files.
 
-[Next: Concepts/state](./concepts/state.md)
+[Next: Concepts/state](./state.md)
