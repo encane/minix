@@ -80,4 +80,4 @@ const callback = (store)=>{
 userStore.unsubscribe(callback)
 ```
 
-[Next: Concepts/getters](./concepts/getters.md)
+[Next: Concepts/getters](./getters.md)
