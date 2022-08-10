@@ -20,12 +20,12 @@ type State = {
   number: number
 }
 
-const state: State = {
+const testState: State = {
   string: 'foo',
   number: 1
 };
 
-const getters = {
+const testGetters = {
   getStringAndNumber: (state) => {
     return `${state.string} ${state.number}`;
   },
@@ -43,49 +43,54 @@ describe('tests the store.ts service', () => {
   });
   describe('tests setup of a store', () => {
     it('should setup an observer', () => {
-      defineStore<State>({ state });
+      defineStore<State>({ state: testState });
 
       expect(createObserver).toBeCalledTimes(1);
     });
     it('should setup state', () => {
-      const useStore = defineStore<State>({ state });
+      const useStore = defineStore<State>({ state: testState });
 
-      const { store } = useStore();
+      const { state } = useStore();
 
-      expect(store.state).toEqual(state);
+      expect(state).toEqual(state);
     });
     it('should setup getters', () => {
-      const useStore = defineStore<State>({ state, getters });
-      const { store } = useStore();
+      const useStore = defineStore<State>({ state: testState, getters: testGetters });
+      const { state, getters } = useStore();
 
-      for (const [key, getter] of Object.entries(getters)) {
-        const getterValue = getter(store.state);
+      for (const [key, getter] of Object.entries(testGetters)) {
+        const getterValue = getter(state);
 
-        expect(store.getters[key]).toBe(getterValue);
+        expect(getters[key]).toBe(getterValue);
       }
     });
   });
 
   describe('tests returned properties from store', () => {
     it('should return a function', () => {
-      const useStore = defineStore<State>({ state });
+      const useStore = defineStore<State>({ state:testState });
       expect(typeof useStore).toBe('function');
     });
     describe('tests the returned properties from returned function', () => {
-      it('should contain a store object', () => {
-        const useStore = defineStore<State>({ state });
+      it('should contain a state object', () => {
+        const useStore = defineStore<State>({ state: testState });
         const store = useStore();
-        expect(store).toHaveProperty('store');
+        expect(store).toHaveProperty('state');
+      });
+      it('should contain a getters object', () => {
+        const useStore = defineStore<State>({ state: testState });
+        const store = useStore();
+        expect(store).toHaveProperty('getters');
       });
       it('should contain a subscribe function', () => {
-        const useStore = defineStore<State>({ state });
+        const useStore = defineStore<State>({ state: testState });
         const store = useStore();
-        expect(store).toHaveProperty('store');
+        expect(store).toHaveProperty('subscribe');
       });
       it('should contain a unsubscribe function', () => {
-        const useStore = defineStore<State>({ state });
+        const useStore = defineStore<State>({ state: testState });
         const store = useStore();
-        expect(store).toHaveProperty('store');
+        expect(store).toHaveProperty('unsubscribe');
       });
     });
   });
@@ -93,29 +98,29 @@ describe('tests the store.ts service', () => {
   describe('tests state management and updates', () => {
     describe('tests state updates', () => {
       it('should update the state value', (() => {
-        const useStore = defineStore<State>({ state, getters });
-        const { store } = useStore();
+        const useStore = defineStore<State>({ state: testState, getters: testGetters });
+        const { state } = useStore();
         const stateUpdate = 17;
-        const oldNumber = state.number;
+        const oldNumber = testState.number;
 
-        expect(store.state.number).toBe(oldNumber);
-        store.state.number = stateUpdate;
-        expect(store.state.number).toBe(stateUpdate);
+        expect(state.number).toBe(oldNumber);
+        state.number = stateUpdate;
+        expect(state.number).toBe(stateUpdate);
       }));
       it('should update getters', () => {
-        const useStore = defineStore<State>({ state, getters });
-        const { store } = useStore();
+        const useStore = defineStore<State>({ state: testState, getters: testGetters });
+        const { state, getters } = useStore();
         const stateUpdate = 'bar';
         const expectedGetter = `New ${stateUpdate}`;
 
-        store.state.string = stateUpdate;
+        state.string = stateUpdate;
 
-        expect(store.getters.getNewString).toBe(expectedGetter);
+        expect(getters.getNewString).toBe(expectedGetter);
       });
       it('should notify subscribers on state update', () => {
-        const useStore = defineStore<State>({ state, getters });
-        const { store } = useStore();
-        store.state.number = 0;
+        const useStore = defineStore<State>({ state: testState, getters: testGetters });
+        const { state } = useStore();
+        state.number = 0;
 
         expect(createObserver().notify).toBeCalledTimes(1);
       });

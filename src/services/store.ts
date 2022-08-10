@@ -31,7 +31,8 @@ export const defineStore = <State extends object>(store: Store<State>) => {
     };
 
     return {
-      store: _store,
+      state,
+      getters,
       subscribe: observer.subscribe,
       unsubscribe: observer.unsubscribe
     };
