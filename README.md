@@ -10,4 +10,4 @@ npm i @encane/minix
 
 ## Usage
 
-For usage guides please refer to the [docs](./docs/index.md)
+For usage guides please refer to the [docs](./docs/introduction.md)
