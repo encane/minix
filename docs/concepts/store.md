@@ -4,7 +4,7 @@ A store is an entity that contains state and business logic for a mini program t
 
 ## When to use a store
 
-A store should be used when you need to share data throughout your application. This includes data that needs to persist between pages.
+A store should be used when you need to share data throughout your mini program. This includes data that needs to persist between pages.
 
 A store should not be used when data can be contained within a page or component. For example managing the visibility of items on a page.
 
@@ -47,4 +47,6 @@ Page({
 
 ```
 
-You can define any amount of stores in your project but you should seperate them into in individual files.
+You can define any amount of stores in your mini program but you should seperate them into in individual files.
+
+[Next: Concepts/state](./concepts/state.md)

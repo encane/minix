@@ -19,3 +19,5 @@ Install Minix using npm
 ```js
 npm install @encane/minix
 ```
+
+[Next: Concepts/stores](./concepts/store.md)
