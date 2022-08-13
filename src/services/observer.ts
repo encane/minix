@@ -1,9 +1,9 @@
-import { Subscriber, Observer } from '../types';
+import { ISubscriber, IObserver } from '../types';
 
-export const createObserver = <T>(): Observer<T> => {
-  const subscribers: Subscriber<T>[] = [];
+export const createObserver = <T>(): IObserver<T> => {
+  const subscribers: ISubscriber<T>[] = [];
 
-  const subscribe = (subscriber: Subscriber<T>) => {
+  const subscribe = (subscriber: ISubscriber<T>) => {
     if (subscribers.includes(subscriber)) {
       return;
     }
@@ -11,7 +11,7 @@ export const createObserver = <T>(): Observer<T> => {
     subscribers.push(subscriber);
   };
 
-  const unsubscribe = (subscriber: Subscriber<T>) => {
+  const unsubscribe = (subscriber: ISubscriber<T>) => {
     if (!subscribers.includes(subscriber)) {
       return;
     }
