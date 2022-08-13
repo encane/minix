@@ -1,5 +1,6 @@
 import { Getters, IStore, StoreOptions, StateUpdate, WrappedGetters } from '../types';
 import { createObserver } from './observer';
+import { removeObjectProperty } from '../utils/removeObjectProperty';
 
 export const defineStore = <State extends object>(store: StoreOptions<State>) => {
   const _state = { ...store.state };
@@ -24,8 +25,13 @@ export const defineStore = <State extends object>(store: StoreOptions<State>) =>
     state = new Proxy(_state, stateHandler);
 
     const getterHandlerHandler: ProxyHandler<Getters<State>> = {
-      get: (object, key) => {
-        return object[key as keyof typeof object](state, getters);
+      get: (object: Getters<State>, key: string) => {
+        const wrappedWithoutSelf = removeObjectProperty(object, key);
+
+        return object[key as keyof typeof object](state, wrappedWithoutSelf);
+      },
+      set: () => {
+        throw new Error('Getters cannot be updated. Update store state instead');
       }
     };
 
