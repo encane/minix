@@ -15,7 +15,7 @@ Page({
 })
 ```
 
-If this logic needs to be used in more than one place we may end up duplicating the function. You can use "getters" in your store to derive values in from your state.
+If this logic needs to be used in more than one place we may end up duplicating the function. You can use "getters" in your store to derive values in from your state. Each getter will be passed the ``state`` object as a first paramter
 
 ```js
 import { defineStore } from '@encane/minix'
@@ -42,4 +42,40 @@ const { getters } = useUserStore()
 
 getters.fullName
 // 'John Smith'
+```
+## Using other getters
+
+Getters will also receive a second paramter ``getters``. This object will contain the stores getters for nested use. The current getter will not be passed on this object to prevent call stack errors.
+
+```js
+// taskStore.js
+import { defineStore } from '@encane/minix'
+
+const useTaskStore = defineStore({
+  state: {
+    tasks: [
+      { title: 'Write documentation', completed: false, priority: 'high' },
+      { title: 'Write unit tests', completed: false, priority: 'low' },
+      { title: 'Update Readme', completed: true, priority: 'medium' }
+    ]
+  },
+  getters: {
+    getIncompleteTasks: (state) => {
+      return state.tasks.filter((x) => !x.completed);
+    },
+    getHighPriorityTasks: (state, getters) => {
+      return getters.getIncompleteTasks.filter((x) => x.priority === 'high');
+    }
+  }
+});
+```
+
+```js
+const { getters } = useTaskStore();
+
+getters.getHighPriorityTasks;
+
+/*[
+  { title: 'Write documentation', completed: false, priority: 'high' }
+]*/
 ```

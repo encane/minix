@@ -24,9 +24,10 @@ export const defineStore = <State extends object>(store: StoreOptions<State>) =>
     };
     state = new Proxy(_state, stateHandler);
 
-    const getterHandlerHandler: ProxyHandler<Getters<State>> = {
+    const getterHandler: ProxyHandler<Getters<State>> = {
       get: (object: Getters<State>, key: string) => {
-        const wrappedWithoutSelf = removeObjectProperty(object, key);
+        const gettersWithoutSelf: WrappedGetters = removeObjectProperty(object, key);
+        const wrappedWithoutSelf = new Proxy(gettersWithoutSelf, getterHandler);
 
         return object[key as keyof typeof object](state, wrappedWithoutSelf);
       },
@@ -35,7 +36,8 @@ export const defineStore = <State extends object>(store: StoreOptions<State>) =>
       }
     };
 
-    getters = new Proxy(_getters, getterHandlerHandler);
+
+    getters = new Proxy(_getters, getterHandler);
 
 
     return {
