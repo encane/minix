@@ -11,7 +11,13 @@ export const defineStore = <State extends object>(store: StoreOptions<State>) =>
   let getters: WrappedGetters;
 
   return (): IStore<State> => {
-    const stateHandler: ProxyHandler<State> = {
+    const stateHandler: ProxyHandler<object> = {
+      get(target, prop: string) {
+        const value = target[prop as keyof typeof target];
+        const propertyType = typeof value;
+
+        return propertyType !== 'object' ? value : new Proxy(value, stateHandler);
+      },
       set: (obj: State, key: string, value) => {
         obj[key as keyof typeof obj] = value;
         const update: StateUpdate<State> = {
@@ -22,7 +28,7 @@ export const defineStore = <State extends object>(store: StoreOptions<State>) =>
         return true;
       }
     };
-    state = new Proxy(_state, stateHandler);
+    state = new Proxy((_state as unknown as object), stateHandler) as State;
 
     const getterHandler: ProxyHandler<Getters<State>> = {
       get: (object: Getters<State>, key: string) => {
